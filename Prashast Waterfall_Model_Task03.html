@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Waterfall Model – Task #03 | L&T EduTech</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f8faff;
+    --ink: #0f172a;
+    --s1: #1e40af; --s1l: #dbeafe; --s1m: #93c5fd;
+    --s2: #0369a1; --s2l: #e0f2fe; --s2m: #7dd3fc;
+    --s3: #0e7490; --s3l: #cffafe; --s3m: #67e8f9;
+    --s4: #047857; --s4l: #d1fae5; --s4m: #6ee7b7;
+    --s5: #065f46; --s5l: #a7f3d0; --s5m: #34d399;
+    --s6: #7c3aed; --s6l: #ede9fe; --s6m: #c4b5fd;
+    --muted: #64748b;
+    --card: #ffffff;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--ink);
+    padding-bottom: 60px;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1e3a5f 100%);
+    padding: 22px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #3b82f6;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .lt-box {
+    background: #dc2626; color: #fff; font-size: 18px; font-weight: 800;
+    padding: 7px 13px; border-radius: 6px; letter-spacing: 1px;
+  }
+  .h-title { color: #e2e8f0; font-size: 16px; font-weight: 700; }
+  .h-sub { color: #64748b; font-size: 11px; margin-top: 2px; letter-spacing: 1px; }
+  .task-badge {
+    background: #3b82f6; color: white; font-weight: 700; font-size: 13px;
+    padding: 8px 18px; border-radius: 8px; letter-spacing: .5px;
+  }
+
+  /* ── Page heading ── */
+  .page-head { text-align: center; padding: 44px 20px 12px; }
+  .page-head h1 { font-size: 42px; font-weight: 800; color: var(--ink); letter-spacing: -1px; }
+  .page-head h1 span { color: #3b82f6; }
+  .page-head p { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .product-chip {
+    display: inline-block; margin-top: 14px;
+    background: #0f172a; color: #7dd3fc; font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; padding: 6px 18px; border-radius: 20px;
+  }
+
+  /* ── Waterfall container ── */
+  .waterfall { max-width: 980px; margin: 40px auto; padding: 0 20px; position: relative; }
+
+  /* Vertical spine */
+  .waterfall::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, #3b82f6, #7c3aed);
+    transform: translateX(-50%); opacity: .25;
+  }
+
+  /* ── Phase block ── */
+  .phase {
+    display: grid; grid-template-columns: 1fr 60px 1fr;
+    align-items: start; margin-bottom: 0; position: relative;
+  }
+
+  /* Left card */
+  .phase-left { padding-right: 20px; padding-bottom: 20px; }
+  .phase-right { padding-left: 20px; padding-bottom: 20px; }
+  .phase:nth-child(odd) .phase-left { order: 1; }
+  .phase:nth-child(odd) .phase-right { order: 3; }
+  .phase:nth-child(even) .phase-left { order: 3; }
+  .phase:nth-child(even) .phase-right { order: 1; }
+  .phase:nth-child(even) .phase-left { padding-left: 20px; padding-right: 0; }
+  .phase:nth-child(even) .phase-right { padding-right: 20px; padding-left: 0; }
+
+  /* Spine node */
+  .spine-node { order: 2; display: flex; flex-direction: column; align-items: center; padding-top: 28px; }
+  .node-circle {
+    width: 52px; height: 52px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 22px;
+    border: 3px solid white; box-shadow: 0 4px 16px rgba(0,0,0,.15); z-index: 2; position: relative;
+  }
+  .node-line { width: 2px; flex: 1; min-height: 40px; }
+
+  /* Card */
+  .phase-card {
+    background: var(--card); border-radius: 16px;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    overflow: hidden; transition: box-shadow .2s, transform .2s;
+  }
+  .phase-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.12); transform: translateY(-2px); }
+
+  .card-header {
+    padding: 14px 18px 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .card-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 6px; letter-spacing: 1px;
+  }
+  .card-title { font-size: 16px; font-weight: 800; }
+  .card-body { padding: 0 18px 16px; }
+  .card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+
+  /* Deliverables */
+  .deliverables { display: flex; flex-direction: column; gap: 5px; }
+  .del-item {
+    display: flex; align-items: flex-start; gap: 8px; font-size: 12px;
+    padding: 5px 8px; border-radius: 7px;
+  }
+  .del-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .del-text { color: #1e293b; font-weight: 500; line-height: 1.4; }
+
+  /* Duration pill */
+  .duration {
+    margin-top: 10px; display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Empty side placeholder */
+  .phase-empty { padding: 20px; }
+
+  /* ── Connector arrows (pure CSS) ── */
+  .connector {
+    max-width: 980px; margin: 0 auto; padding: 0 20px;
+    display: flex; justify-content: center; position: relative; height: 32px;
+  }
+  .connector-arrow {
+    width: 28px; display: flex; flex-direction: column; align-items: center;
+  }
+  .connector-line { width: 2px; height: 20px; }
+  .connector-head { width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid; }
+
+  /* ── Footer / legend ── */
+  .legend { max-width: 980px; margin: 40px auto 0; padding: 0 20px; }
+  .legend-title { font-weight: 700; font-size: 14px; margin-bottom: 14px; color: var(--ink); }
+  .legend-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    background: white; border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+  }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  /* key insight box */
+  .insight-box {
+    max-width: 980px; margin: 32px auto 0; padding: 0 20px;
+  }
+  .insight-inner {
+    background: #0f172a; color: white; border-radius: 14px; padding: 22px 28px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .insight-stat { text-align: center; }
+  .insight-num { font-size: 28px; font-weight: 800; color: #60a5fa; font-family: 'JetBrains Mono', monospace; }
+  .insight-label { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+  @media (max-width: 700px) {
+    .waterfall::before { display: none; }
+    .phase { grid-template-columns: 1fr; }
+    .phase-left, .phase-right, .phase-empty { padding: 0 0 16px 0; order: 2 !important; }
+    .spine-node { order: 1 !important; flex-direction: row; padding: 0 0 12px 0; gap: 12px; }
+    .node-line { display: none; }
+    .insight-inner { grid-template-columns: 1fr 1fr; }
+    header { flex-direction: column; gap: 10px; padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="lt-box">L&T</div>
+    <div>
+      <div class="h-title">Critical Thinking, Design Thinking, Leadership & Teamwork</div>
+      <div class="h-sub">WATERFALL MODELS AND PRODUCT DEVELOPMENT · TASK #03</div>
+    </div>
+  </div>
+  <div class="task-badge">Task #03</div>
+</header>
+
+<div class="page-head">
+  <h1>Waterfall <span>Development Model</span></h1>
+  <p>A sequential phase-by-phase product development methodology for startup companies</p>
+  <div class="product-chip">Product: AI-Powered Invoice Maker App (InvoiceAI)</div>
+</div>
+
+<div class="insight-inner" style="max-width:940px;margin:0 auto 20px;border-radius:14px;padding:20px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;background:#0f172a;color:white;">
+  <div class="insight-stat" style="text-align:center"><div style="font-size:26px;font-weight:800;color:#60a5fa;font-family:'JetBrains Mono',monospace">6</div><div style="font-size:11px;color:#94a3b8;margin-top:4px">Sequential Phases</div></div>
+  <div class="insight-stat" style="text-align:center"><div style="font-size:26px;font-weight:800;color:#34d399;font-family:'JetBrains Mono',monospace">~7 mo</div><div style="font-size:11px;color:#94a3b8;margin-top:4px">Estimated Timeline</div></div>
+  <div class="insight-stat" style="text-align:center"><div style="font-size:26px;font-weight:800;color:#f59e0b;font-family:'JetBrains Mono',monospace">24</div><div style="font-size:11px;color:#94a3b8;margin-top:4px">Total Deliverables</div></div>
+  <div class="insight-stat" style="text-align:center"><div style="font-size:26px;font-weight:800;color:#c4b5fd;font-family:'JetBrains Mono',monospace">0↩</div><div style="font-size:11px;color:#94a3b8;margin-top:4px">Iteration (Strict WF)</div></div>
+</div>
+
+<div class="waterfall" id="wf"></div>
+
+<div class="legend">
+  <div class="legend-title">Phase Legend</div>
+  <div class="legend-grid" id="legend-grid"></div>
+</div>
+
+<script>
+const phases = [
+  {
+    num:"01", title:"Requirements Gathering",
+    color:"#1e40af", light:"#dbeafe", mid:"#93c5fd", icon:"📋",
+    duration:"3–4 weeks",
+    desc:"All functional and non-functional requirements are gathered from stakeholders — investors, target users, and the founding team — before any design or development begins. This is the most critical phase; errors here cascade through every subsequent phase.",
+    deliverables:[
+      "Business Requirements Document (BRD)",
+      "Functional Requirements Specification (FRS)",
+      "User Persona definitions (3 primary personas)",
+      "Competitive analysis report (5 competitors)",
+      "Feasibility study & risk register",
+    ],
+    side:"left"
+  },
+  {
+    num:"02", title:"System Design",
+    color:"#0369a1", light:"#e0f2fe", mid:"#7dd3fc", icon:"🏗️",
+    duration:"4–5 weeks",
+    desc:"The requirements document is translated into a system design blueprint. Architects define the technology stack, database schema, API contracts, UI wireframes, and infrastructure architecture. No code is written — only design documents and prototypes.",
+    deliverables:[
+      "High-Level Design (HLD) document",
+      "Database schema & ER diagram",
+      "API contract & endpoint specifications",
+      "UI/UX wireframes for all 22 screens",
+      "Infrastructure & cloud architecture diagram",
+      "Technology stack decision document",
+    ],
+    side:"right"
+  },
+  {
+    num:"03", title:"Implementation (Coding)",
+    color:"#0e7490", light:"#cffafe", mid:"#67e8f9", icon:"💻",
+    duration:"8–10 weeks",
+    desc:"Developers write code strictly following the design documents. Frontend (React / React Native), backend (Node.js / FastAPI), and AI components (LLM integration for invoice generation) are built in parallel by separate teams. No feature scope changes are accepted during this phase.",
+    deliverables:[
+      "Frontend application (web + mobile)",
+      "Backend REST API (all endpoints)",
+      "AI invoice generation module (LLM-integrated)",
+      "Database setup & migrations",
+      "Payment gateway integration (Razorpay)",
+      "Admin dashboard & analytics backend",
+    ],
+    side:"left"
+  },
+  {
+    num:"04", title:"Testing & Quality Assurance",
+    color:"#047857", light:"#d1fae5", mid:"#6ee7b7", icon:"🧪",
+    duration:"4–5 weeks",
+    desc:"The fully built system is handed off to the QA team. No new features are added — only bugs are fixed. All testing types (unit, integration, UAT, performance, security) are executed. A sign-off from QA is mandatory before moving to deployment.",
+    deliverables:[
+      "Test plan & test case document (300+ cases)",
+      "Unit test reports (target: 85%+ coverage)",
+      "Integration & API test results",
+      "User Acceptance Testing (UAT) sign-off",
+      "Performance benchmark report",
+      "Security penetration test report",
+    ],
+    side:"right"
+  },
+  {
+    num:"05", title:"Deployment",
+    color:"#065f46", light:"#a7f3d0", mid:"#34d399", icon:"🚀",
+    duration:"2–3 weeks",
+    desc:"The QA-approved product is deployed to production environments. A staged rollout is used — beta release to 500 users first, then full public launch. DevOps team manages CI/CD pipelines, cloud provisioning, and rollback procedures in case of critical failures.",
+    deliverables:[
+      "Deployed product on AWS (production environment)",
+      "CI/CD pipeline setup (GitHub Actions)",
+      "Beta launch to 500 invite-only users",
+      "App Store & Play Store listings live",
+      "Monitoring & alerting setup (Datadog)",
+      "Public launch & press release",
+    ],
+    side:"left"
+  },
+  {
+    num:"06", title:"Maintenance & Support",
+    color:"#7c3aed", light:"#ede9fe", mid:"#c4b5fd", icon:"🛠️",
+    duration:"Ongoing",
+    desc:"Post-launch, the team monitors the system for bugs, performance issues, and user feedback. Critical patches are released within 24 hours. Minor updates are batched into monthly releases. This phase is technically perpetual — and is the only phase where limited iteration is permitted.",
+    deliverables:[
+      "Bug tracking & patch release process",
+      "Customer support system (Freshdesk)",
+      "Monthly product update releases",
+      "SLA document (99.9% uptime commitment)",
+      "User feedback aggregation & roadmap planning",
+    ],
+    side:"right"
+  }
+];
+
+const wf = document.getElementById('wf');
+const lgGrid = document.getElementById('legend-grid');
+
+phases.forEach((p, idx) => {
+  // Connector arrow before (except first)
+  if (idx > 0) {
+    const conn = document.createElement('div');
+    conn.style.cssText = `display:flex;justify-content:center;padding:0;height:36px;align-items:center;`;
+    conn.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center">
+      <div style="width:2px;height:20px;background:${p.color};opacity:.5"></div>
+      <div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid ${p.color};opacity:.7"></div>
+    </div>`;
+    wf.appendChild(conn);
+  }
+
+  const phase = document.createElement('div');
+  phase.className = 'phase';
+
+  const card = `
+    <div class="phase-card" style="border-color:${p.mid};">
+      <div class="card-header" style="background:${p.light};border-bottom:1.5px solid ${p.mid}">
+        <span class="card-num" style="background:${p.color};color:white">PHASE ${p.num}</span>
+        <span class="card-title" style="color:${p.color}">${p.title}</span>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">${p.desc}</p>
+        <div class="deliverables">
+          ${p.deliverables.map(d => `
+            <div class="del-item" style="background:${p.light}">
+              <div class="del-dot" style="background:${p.color}"></div>
+              <div class="del-text">${d}</div>
+            </div>`).join('')}
+        </div>
+        <div class="duration" style="background:${p.light};color:${p.color};border:1px solid ${p.mid}">
+          ⏱ ${p.duration}
+        </div>
+      </div>
+    </div>`;
+
+  const empty = `<div class="phase-empty"></div>`;
+  const spine = `
+    <div class="spine-node">
+      <div class="node-circle" style="background:${p.color}">
+        <span style="font-size:22px">${p.icon}</span>
+      </div>
+      <div class="node-line" style="background:linear-gradient(to bottom, ${p.color}, ${phases[idx+1]?.color||p.color});opacity:.4"></div>
+    </div>`;
+
+  if (p.side === 'left') {
+    phase.innerHTML = `
+      <div class="phase-left" style="order:1">${card}</div>
+      ${spine}
+      <div class="phase-right" style="order:3">${empty}</div>`;
+  } else {
+    phase.innerHTML = `
+      <div class="phase-left" style="order:3;padding-left:20px;padding-right:0">${empty}</div>
+      ${spine}
+      <div class="phase-right" style="order:1;padding-right:20px;padding-left:0">${card}</div>`;
+  }
+
+  wf.appendChild(phase);
+
+  // Legend
+  const li = document.createElement('div');
+  li.className = 'legend-item';
+  li.innerHTML = `<div class="legend-dot" style="background:${p.color}"></div>${p.icon} Phase ${p.num}: ${p.title}`;
+  lgGrid.appendChild(li);
+});
+
+// Waterfall flow note at bottom
+const note = document.createElement('div');
+note.style.cssText = 'text-align:center;padding:32px 20px 0;color:#64748b;font-size:12.5px;line-height:1.7';
+note.innerHTML = `<strong style="color:#0f172a">⚠ Waterfall Rule:</strong> Each phase must be 100% complete and signed off before the next phase begins.<br>There is <strong>no going back</strong> — changes to a completed phase require re-evaluation of all subsequent phases.<br><span style="color:#3b82f6;font-weight:700">This makes thorough Requirements Gathering the most critical phase of the entire model.</span>`;
+document.querySelector('.waterfall').after(note);
+</script>
+</body>
+</html>

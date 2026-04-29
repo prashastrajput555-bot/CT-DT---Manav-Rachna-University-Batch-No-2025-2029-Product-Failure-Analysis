@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stakeholder Mapping – Task #09 | L&T EduTech</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #151820;
+    --card: #1c2030;
+    --border: #252a3a;
+    --accent: #4f8ef7;
+    --accent2: #f7a84f;
+    --accent3: #4ff7a8;
+    --accent4: #f74f8e;
+    --accent5: #a84ff7;
+    --text: #e8ecf4;
+    --muted: #7a8099;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #0a0c12 0%, #12162a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 48px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo-area { display: flex; align-items: center; gap: 16px; }
+  .lt-badge {
+    background: linear-gradient(135deg, #c8102e, #8b0d20);
+    color: #fff; font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 18px; padding: 8px 14px; border-radius: 8px; letter-spacing: 1px;
+  }
+  .header-title { font-family: 'Syne', sans-serif; font-size: 13px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .header-main { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); }
+  .task-badge {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 18px; font-size: 13px; color: var(--accent); font-weight: 500; font-family: 'Syne', sans-serif;
+  }
+
+  /* ── Tabs ── */
+  .tab-bar {
+    display: flex; gap: 0; overflow-x: auto; background: var(--surface);
+    border-bottom: 1px solid var(--border); padding: 0 48px;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 16px 22px; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--muted); border-bottom: 3px solid transparent; transition: all .2s;
+    white-space: nowrap; font-family: 'DM Sans', sans-serif;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab .num { display: inline-block; background: var(--border); border-radius: 4px; padding: 1px 7px; font-size: 11px; margin-right: 8px; font-family: 'Syne', sans-serif; font-weight: 700; }
+  .tab.active .num { background: var(--accent); color: #fff; }
+
+  /* ── Panel ── */
+  .panels { padding: 36px 48px; }
+  .panel { display: none; animation: fadeIn .3s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  .panel-header { margin-bottom: 32px; }
+  .project-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); font-family: 'Syne', sans-serif; margin-bottom: 8px; }
+  .project-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--text); }
+  .project-subtitle { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  /* ── Two column layout ── */
+  .panel-body { display: grid; grid-template-columns: 1fr 340px; gap: 28px; }
+  @media (max-width: 900px) { .panel-body { grid-template-columns: 1fr; } .panels { padding: 24px 20px; } header { padding: 20px; flex-direction: column; gap: 12px; } }
+
+  /* ── Power-Interest Grid ── */
+  .grid-wrap { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  .grid-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+  .pi-grid {
+    position: relative; width: 100%; aspect-ratio: 1.5/1;
+    background:
+      linear-gradient(to right, rgba(255,255,255,.03) 50%, transparent 50%),
+      linear-gradient(to bottom, transparent 50%, rgba(255,255,255,.03) 50%);
+    border: 1px solid var(--border); border-radius: 10px; overflow: visible;
+  }
+  /* Quadrant labels */
+  .q-label {
+    position: absolute; font-size: 10px; font-weight: 600; font-family: 'Syne', sans-serif;
+    text-transform: uppercase; letter-spacing: 1.5px; opacity: .35; pointer-events: none;
+  }
+  .q-tl { top:10px; left:10px; color: #f74f8e; }
+  .q-tr { top:10px; right:10px; color: #4ff7a8; text-align:right; }
+  .q-bl { bottom:10px; left:10px; color: var(--muted); }
+  .q-br { bottom:10px; right:10px; color: #f7a84f; text-align:right; }
+  /* Axis labels */
+  .axis-x { position: absolute; bottom: -26px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); font-family: 'Syne', sans-serif; letter-spacing: 1px; }
+  .axis-y { position: absolute; left: -28px; top: 50%; transform: translateY(-50%) rotate(-90deg); font-size: 11px; color: var(--muted); font-family: 'Syne', sans-serif; letter-spacing: 1px; }
+  .crosshair-h { position:absolute; top:50%; left:0; right:0; height:1px; background: var(--border); }
+  .crosshair-v { position:absolute; left:50%; top:0; bottom:0; width:1px; background: var(--border); }
+  /* Stakeholder bubble */
+  .sh-bubble {
+    position: absolute; transform: translate(-50%, -50%);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .2s; z-index: 2;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.08);
+  }
+  .sh-bubble:hover { transform: translate(-50%,-50%) scale(1.15); z-index: 10; }
+  .sh-bubble .inner { font-size: 9px; font-weight: 700; font-family: 'Syne', sans-serif; text-align: center; line-height: 1.2; padding: 4px; }
+  .sh-label {
+    position: absolute; font-size: 9.5px; font-family: 'DM Sans', sans-serif;
+    font-weight: 500; color: var(--text); white-space: nowrap; pointer-events: none;
+    background: rgba(13,15,20,.85); padding: 2px 6px; border-radius: 4px;
+    top: calc(100% + 4px); left: 50%; transform: translateX(-50%);
+    opacity: 0; transition: opacity .2s;
+  }
+  .sh-bubble:hover .sh-label { opacity: 1; }
+
+  /* ── Stakeholder List ── */
+  .sh-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+  .sh-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+  }
+  .sh-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .sh-name { font-size: 13px; font-weight: 600; color: var(--text); font-family: 'Syne', sans-serif; }
+  .sh-role { font-size: 11.5px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  /* ── Sidebar ── */
+  .sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .info-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .info-card-title { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 14px; }
+  .quadrant-legend { display: flex; flex-direction: column; gap: 10px; }
+  .ql-item { display: flex; gap: 10px; align-items: flex-start; }
+  .ql-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; margin-top: 3px; }
+  .ql-name { font-size: 12px; font-weight: 600; color: var(--text); font-family: 'Syne', sans-serif; }
+  .ql-sub { font-size: 11px; color: var(--muted); }
+  .strategy-list { display: flex; flex-direction: column; gap: 8px; }
+  .strat-item { font-size: 12.5px; color: var(--muted); line-height: 1.5; padding-left: 12px; border-left: 2px solid var(--border); }
+  .strat-item strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <div class="lt-badge">L&T</div>
+    <div>
+      <div class="header-title">Critical Thinking, Design Thinking, Leadership & Teamwork</div>
+      <div class="header-main">Stakeholder Mapping</div>
+    </div>
+  </div>
+  <div class="task-badge">Task #09 – Design Thinking Practices</div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab(0)"><span class="num">01</span>5G Mobile Upgrade</div>
+  <div class="tab" onclick="switchTab(1)"><span class="num">02</span>Rainwater Harvesting</div>
+  <div class="tab" onclick="switchTab(2)"><span class="num">03</span>Cold Storage Facility</div>
+  <div class="tab" onclick="switchTab(3)"><span class="num">04</span>Smart City E-Vehicles</div>
+  <div class="tab" onclick="switchTab(4)"><span class="num">05</span>Bank Digitalization</div>
+</div>
+
+<div class="panels" id="panels"></div>
+
+<script>
+const PROJECTS = [
+  {
+    title: "Mobile Phones Upgraded with 5G",
+    subtitle: "Transition of a company's mobile device fleet to 5G-enabled smartphones",
+    color: "#4f8ef7",
+    stakeholders: [
+      { id:"CEO",    label:"CEO",          x:80, y:20, color:"#4ff7a8", role:"High Power, High Interest – Executive sponsor driving the upgrade mandate" },
+      { id:"IT",     label:"IT Dept",      x:70, y:30, color:"#4ff7a8", role:"High Power, High Interest – Manages infrastructure, rollout & security" },
+      { id:"EMP",    label:"Employees",    x:75, y:65, color:"#f7a84f", role:"Low Power, High Interest – Primary end-users; adoption drives success" },
+      { id:"TEL",    label:"Telecom\nProvider", x:20, y:25, color:"#f74f8e", role:"High Power, Low Interest – Network provider; must ensure 5G coverage" },
+      { id:"GOV",    label:"Govt/TRAI",   x:15, y:15, color:"#f74f8e", role:"High Power, Low Interest – Spectrum regulator; policy compliance required" },
+      { id:"VEN",    label:"Device\nVendor", x:30, y:35, color:"#4ff7a8", role:"High Power, High Interest – Hardware supplier; contracts & bulk pricing" },
+      { id:"FIN",    label:"Finance",      x:55, y:20, color:"#4ff7a8", role:"High Power, High Interest – Budget approvals, ROI tracking" },
+      { id:"CUS",    label:"Customers",    x:80, y:75, color:"#f7a84f", role:"Low Power, High Interest – Benefit from faster service delivery" },
+      { id:"SEC",    label:"Cybersecurity",x:40, y:28, color:"#4ff7a8", role:"High Power, High Interest – 5G introduces new attack surfaces" },
+      { id:"HR",     label:"HR",           x:70, y:72, color:"#f7a84f", role:"Low Power, High Interest – Training & change management" },
+    ],
+    strategies: [
+      { q:"Manage Closely", color:"#4ff7a8", desc:"CEO, IT Dept, Finance, Vendors, Cybersecurity – Core decision-makers; engage in weekly reviews" },
+      { q:"Keep Satisfied", color:"#f74f8e", desc:"Telecom Provider, TRAI – Critical enablers; ensure contracts & compliance are handled proactively" },
+      { q:"Keep Informed", color:"#f7a84f", desc:"Employees, Customers, HR – Conduct training programs, FAQs, and change communications" },
+      { q:"Monitor", color:"#8888aa", desc:"Industry analysts, competitor benchmarks – Minimal engagement; monitor for market shifts" },
+    ]
+  },
+  {
+    title: "Rainwater Harvest & Drain Project",
+    subtitle: "Community apartment-level rainwater harvesting and stormwater drainage system",
+    color: "#4ff7a8",
+    stakeholders: [
+      { id:"RWA",  label:"RWA/\nSociety",   x:75, y:25, color:"#4ff7a8", role:"High Power, High Interest – Key decision-maker; drives adoption and maintenance" },
+      { id:"MUN",  label:"Municipality",    x:20, y:20, color:"#f74f8e", role:"High Power, Low Interest – Approves permits, sets by-laws for rainwater systems" },
+      { id:"JJB",  label:"Delhi Jal\nBoard", x:15, y:30, color:"#f74f8e", role:"High Power, Low Interest – Regulatory body; empanels agencies & monitors compliance" },
+      { id:"RES",  label:"Residents",       x:80, y:70, color:"#f7a84f", role:"Low Power, High Interest – Primary beneficiaries; water bill savings drive buy-in" },
+      { id:"CON",  label:"Contractor",      x:60, y:25, color:"#4ff7a8", role:"High Power, High Interest – Technical execution; quality of installation is critical" },
+      { id:"CGW",  label:"CGWB",           x:18, y:18, color:"#f74f8e", role:"High Power, Low Interest – Central Ground Water Board; national compliance" },
+      { id:"ENV",  label:"Env. NGOs",       x:75, y:72, color:"#f7a84f", role:"Low Power, High Interest – Advocates; can build community trust and awareness" },
+      { id:"ARC",  label:"Architect",       x:50, y:30, color:"#4ff7a8", role:"High Power, High Interest – Designs rooftop capture & storage system layout" },
+      { id:"FIN",  label:"Residents\nFinance", x:72, y:62, color:"#f7a84f", role:"Low Power, High Interest – Co-fund installation; need clear payback period data" },
+      { id:"MED",  label:"Local Media",     x:30, y:72, color:"#8888aa", role:"Low Power, Low Interest – Monitor; can amplify project success story" },
+    ],
+    strategies: [
+      { q:"Manage Closely", color:"#4ff7a8", desc:"RWA, Contractor, Architect – Core project team; engage in design, costing, and milestone reviews" },
+      { q:"Keep Satisfied", color:"#f74f8e", desc:"Delhi Jal Board, CGWB, Municipality – Regulatory bodies; ensure all permits, empanelment docs are in order" },
+      { q:"Keep Informed", color:"#f7a84f", desc:"Residents, Environmental NGOs, Finance Committee – Regular updates, savings calculations, and project timelines" },
+      { q:"Monitor", color:"#8888aa", desc:"Local Media – Track coverage; leverage positive stories to build community momentum" },
+    ]
+  },
+  {
+    title: "Cold Storage Facility Establishment",
+    subtitle: "Setting up a temperature-controlled cold storage facility for supply chain optimization",
+    color: "#a84ff7",
+    stakeholders: [
+      { id:"INV",  label:"Investors/\nPromoters", x:75, y:20, color:"#4ff7a8", role:"High Power, High Interest – Fund the project; expect ROI within defined timelines" },
+      { id:"GOV",  label:"Govt/FSSAI",      x:18, y:18, color:"#f74f8e", role:"High Power, Low Interest – Food safety regulations, cold chain certifications" },
+      { id:"FAR",  label:"Farmers/\nSuppliers", x:78, y:72, color:"#f7a84f", role:"Low Power, High Interest – Primary users; reduce post-harvest losses" },
+      { id:"RET",  label:"Retailers/\nBuyers", x:72, y:65, color:"#f7a84f", role:"Low Power, High Interest – End consumers of cold chain service; need reliability" },
+      { id:"CON",  label:"Constructor/\nEngineer", x:65, y:22, color:"#4ff7a8", role:"High Power, High Interest – Civil and MEP contractor; builds and commissions" },
+      { id:"EQ",   label:"Equipment\nSupplier", x:55, y:28, color:"#4ff7a8", role:"High Power, High Interest – Compressors, racks, IoT sensors; critical procurement" },
+      { id:"LOG",  label:"Logistics\nPartner",  x:72, y:60, color:"#f7a84f", role:"Low Power, High Interest – Last-mile cold-chain transport; SLA alignment needed" },
+      { id:"POW",  label:"Power\nUtility",     x:20, y:35, color:"#f74f8e", role:"High Power, Low Interest – Stable 3-phase power; critical for refrigeration continuity" },
+      { id:"INS",  label:"Insurance",          x:30, y:22, color:"#4ff7a8", role:"High Power, High Interest – Cargo and facility insurance; risk coverage" },
+      { id:"COM",  label:"Community",          x:30, y:75, color:"#8888aa", role:"Low Power, Low Interest – Monitor; employment opportunities may build goodwill" },
+    ],
+    strategies: [
+      { q:"Manage Closely", color:"#4ff7a8", desc:"Investors, Constructor, Equipment Supplier, Insurance – Core delivery team; weekly standups and financial tracking" },
+      { q:"Keep Satisfied", color:"#f74f8e", desc:"FSSAI/Govt, Power Utility – Obtain and maintain certifications; ensure power redundancy (DG sets)" },
+      { q:"Keep Informed", color:"#f7a84f", desc:"Farmers, Retailers, Logistics Partners – Onboard via training; share SOPs and pricing structures" },
+      { q:"Monitor", color:"#8888aa", desc:"Local Community – Track sentiment; highlight employment and economic benefits when needed" },
+    ]
+  },
+  {
+    title: "Smart City with All E-Vehicles",
+    subtitle: "City-wide transition to electric vehicles across public and private transport",
+    color: "#f7a84f",
+    stakeholders: [
+      { id:"MUN",  label:"Municipal\nCorp",     x:72, y:18, color:"#4ff7a8", role:"High Power, High Interest – Policy driver; mandates EV transitions and allocates budget" },
+      { id:"STATE",label:"State Govt",          x:20, y:15, color:"#f74f8e", role:"High Power, Low Interest – Legislation, subsidies, and DISCOMS oversight" },
+      { id:"CIT",  label:"Citizens",            x:78, y:72, color:"#f7a84f", role:"Low Power, High Interest – Primary users; need awareness, subsidies, and infrastructure" },
+      { id:"EVM",  label:"EV\nManufacturers",   x:65, y:22, color:"#4ff7a8", role:"High Power, High Interest – OEMs like Tata, Ola; fleet supply and pricing" },
+      { id:"CHG",  label:"Charging\nInfra",     x:60, y:30, color:"#4ff7a8", role:"High Power, High Interest – Station operators; dense network is adoption prerequisite" },
+      { id:"POW",  label:"Power\nDISCOM",        x:22, y:28, color:"#f74f8e", role:"High Power, Low Interest – Grid capacity and green energy supply must scale" },
+      { id:"RTO",  label:"RTO/MoRTH",           x:18, y:32, color:"#f74f8e", role:"High Power, Low Interest – Vehicle registration and policy compliance" },
+      { id:"ENV",  label:"Env.\nGroups",         x:75, y:65, color:"#f7a84f", role:"Low Power, High Interest – Advocates; amplify benefits of zero-emission target" },
+      { id:"FIN",  label:"Fin-tech/\nEMI",       x:68, y:60, color:"#f7a84f", role:"Low Power, High Interest – Financing EV purchases; critical for lower-income segments" },
+      { id:"MED",  label:"Media",               x:30, y:75, color:"#8888aa", role:"Low Power, Low Interest – Monitor; coverage shapes public perception" },
+    ],
+    strategies: [
+      { q:"Manage Closely", color:"#4ff7a8", desc:"Municipal Corp, EV Manufacturers, Charging Infra – Lead the coalition; co-create rollout roadmap and incentive structure" },
+      { q:"Keep Satisfied", color:"#f74f8e", desc:"State Govt, DISCOM, RTO/MoRTH – Engage proactively on policy alignment, grid capacity planning, and registration ease" },
+      { q:"Keep Informed", color:"#f7a84f", desc:"Citizens, Environmental Groups, Fintech – Run awareness campaigns, subsidy info drives, and green impact reports" },
+      { q:"Monitor", color:"#8888aa", desc:"Media – Track narrative; seed positive stories around pollution reduction and cost savings" },
+    ]
+  },
+  {
+    title: "360-Degree Digitalization of Bank Services",
+    subtitle: "Full digital transformation of banking operations — frontend, backend, and customer experience",
+    color: "#f74f8e",
+    stakeholders: [
+      { id:"BKMD", label:"Bank\nMgmt/Board",    x:72, y:18, color:"#4ff7a8", role:"High Power, High Interest – Strategic owner; drives digital mandate and approves budget" },
+      { id:"RBI",  label:"RBI/\nRegulatories",  x:18, y:18, color:"#f74f8e", role:"High Power, Low Interest – Regulates digital banking norms, KYC, data residency" },
+      { id:"CUST", label:"Customers",            x:78, y:70, color:"#f7a84f", role:"Low Power, High Interest – End users; UX quality directly impacts adoption and NPS" },
+      { id:"IT",   label:"IT/\nTech Team",       x:68, y:22, color:"#4ff7a8", role:"High Power, High Interest – Builds and maintains digital infrastructure, APIs, cloud" },
+      { id:"VEN",  label:"Tech\nVendors",        x:60, y:28, color:"#4ff7a8", role:"High Power, High Interest – Fintech partners, core banking vendors (Infosys, TCS, etc.)" },
+      { id:"EMP",  label:"Bank\nEmployees",      x:72, y:62, color:"#f7a84f", role:"Low Power, High Interest – Roles change; require reskilling in digital tools and workflows" },
+      { id:"CYB",  label:"Cyber\nSecurity",      x:55, y:22, color:"#4ff7a8", role:"High Power, High Interest – Zero-trust architecture; fraud prevention critical at scale" },
+      { id:"CERT", label:"CERT-In",             x:15, y:28, color:"#f74f8e", role:"High Power, Low Interest – National cybersecurity compliance authority" },
+      { id:"FIN",  label:"Fin-Analysts",         x:75, y:65, color:"#f7a84f", role:"Low Power, High Interest – Track cost savings, revenue uplift, and digital KPIs" },
+      { id:"MED",  label:"Media/\nPR",            x:30, y:75, color:"#8888aa", role:"Low Power, Low Interest – Monitor; manage reputation around data security" },
+    ],
+    strategies: [
+      { q:"Manage Closely", color:"#4ff7a8", desc:"Bank Board, IT Team, Tech Vendors, Cybersecurity – Sprint-based governance; weekly war-room meetings" },
+      { q:"Keep Satisfied", color:"#f74f8e", desc:"RBI, CERT-In – Proactive regulatory filings, data audit reports, and compliance dashboards" },
+      { q:"Keep Informed", color:"#f7a84f", desc:"Customers, Employees, Financial Analysts – Change management comms, training, digital literacy programs" },
+      { q:"Monitor", color:"#8888aa", desc:"Media/PR – Monitor sentiment; respond swiftly to any data breach or outage news" },
+    ]
+  }
+];
+
+function buildPanel(p, idx) {
+  const accent = p.color;
+  let bubblesHtml = p.stakeholders.map(s => {
+    const size = 40 + Math.random() * 14 | 0;
+    const label = s.label.replace(/\n/g,'<br>');
+    return `<div class="sh-bubble" style="left:${s.x}%;top:${s.y}%;width:${size}px;height:${size}px;background:${s.color}22;border:2px solid ${s.color}88;">
+      <span class="inner" style="color:${s.color};font-size:${size>48?9:8}px;">${s.id}</span>
+      <div class="sh-label">${s.label.replace(/\n/,' ')} – ${s.role.split('–')[0].trim()}</div>
+    </div>`;
+  }).join('');
+
+  let listHtml = p.stakeholders.map(s => `
+    <div class="sh-item">
+      <div class="sh-dot" style="background:${s.color}"></div>
+      <div><div class="sh-name">${s.label.replace(/\n/,' ')}</div><div class="sh-role">${s.role}</div></div>
+    </div>`).join('');
+
+  let stratHtml = p.strategies.map(st => `
+    <div class="ql-item">
+      <div class="ql-dot" style="background:${st.color}"></div>
+      <div><div class="ql-name">${st.q}</div><div class="ql-sub">${st.desc}</div></div>
+    </div>`).join('');
+
+  return `<div class="panel${idx===0?' active':''}" id="panel${idx}">
+    <div class="panel-header">
+      <div class="project-label">Project 0${idx+1}</div>
+      <div class="project-title" style="color:${accent}">${p.title}</div>
+      <div class="project-subtitle">${p.subtitle}</div>
+    </div>
+    <div class="panel-body">
+      <div>
+        <div class="grid-wrap">
+          <div class="grid-title">Power / Interest Matrix</div>
+          <div class="pi-grid">
+            <div class="crosshair-h"></div>
+            <div class="crosshair-v"></div>
+            <div class="q-label q-tl">Keep<br>Satisfied</div>
+            <div class="q-label q-tr">Manage<br>Closely</div>
+            <div class="q-label q-bl">Monitor</div>
+            <div class="q-label q-br">Keep<br>Informed</div>
+            <div class="axis-x">INTEREST →</div>
+            <div class="axis-y">↑ POWER</div>
+            ${bubblesHtml}
+          </div>
+        </div>
+        <div class="sh-list">${listHtml}</div>
+      </div>
+      <div class="sidebar">
+        <div class="info-card">
+          <div class="info-card-title">Engagement Strategy</div>
+          <div class="quadrant-legend">${stratHtml}</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">How to read this map</div>
+          <div class="strategy-list">
+            <div class="strat-item"><strong>Top-right (Manage Closely):</strong> High power, high interest — core team, involve deeply</div>
+            <div class="strat-item"><strong>Top-left (Keep Satisfied):</strong> High power, low interest — address needs, avoid surprises</div>
+            <div class="strat-item"><strong>Bottom-right (Keep Informed):</strong> Low power, high interest — regular updates, build advocates</div>
+            <div class="strat-item"><strong>Bottom-left (Monitor):</strong> Low power, low interest — minimal engagement, periodic check-ins</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('panels').innerHTML = PROJECTS.map((p,i) => buildPanel(p,i)).join('');
+
+function switchTab(idx) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+</script>
+</body>
+</html>

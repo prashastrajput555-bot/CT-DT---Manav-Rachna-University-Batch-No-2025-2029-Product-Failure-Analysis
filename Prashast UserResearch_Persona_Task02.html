@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>User Research & Persona – Task #02 | L&T EduTech</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#fdfcf8;--ink:#1c1917;--accent:#c2410c;--accent2:#0369a1;--accent3:#15803d;--card:#fff;--border:#e7e5e4;--muted:#78716c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink)}
+header{background:#1c1917;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--accent)}
+.lt{background:var(--accent);color:#fff;font-weight:800;font-size:17px;padding:6px 12px;border-radius:5px}
+.ht{color:#e7e5e4;font-size:15px;font-weight:600;margin-left:14px}
+.hs{color:#78716c;font-size:11px;letter-spacing:1.5px;display:block;margin-top:2px}
+.tbadge{background:var(--accent);color:#fff;font-weight:700;font-size:12px;padding:7px 16px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.sec-title{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:var(--ink);line-height:1.1}
+.sec-title span{color:var(--accent)}
+.r-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+.r-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.r-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+th{background:#292524;color:#fef3c7;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:8px 12px;text-align:left}
+td{padding:8px 12px;font-size:12.5px;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#fafaf9}
+.tag{display:inline-block;background:#292524;color:#fef3c7;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace}
+.tag.g{background:#15803d;color:#dcfce7}
+.tag.b{background:#0369a1;color:#e0f2fe}
+.p-wrap{padding:48px 0}
+.p-card{background:var(--card);border:2px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.09)}
+.p-top{background:linear-gradient(135deg,#1c1917 0%,#292524 60%,#3c1a09 100%);padding:32px 36px;display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center}
+.avatar{width:96px;height:96px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:48px;border:3px solid rgba(255,255,255,.2);flex-shrink:0}
+.pname{font-family:'Fraunces',serif;font-size:34px;font-weight:900;color:#fff;margin:4px 0}
+.prole{color:#f59e0b;font-size:14px;font-weight:600}
+.plabel{font-size:10px;letter-spacing:3px;color:#a8a29e;font-family:'JetBrains Mono',monospace;text-transform:uppercase}
+.pquote{max-width:260px;color:#d6d3d1;font-size:13px;font-style:italic;line-height:1.6;border-left:3px solid var(--accent);padding-left:14px}
+.qs{display:flex;background:#fafaf9;border-bottom:1.5px solid var(--border)}
+.qs-i{flex:1;padding:14px 20px;border-right:1.5px solid var(--border);text-align:center}
+.qs-i:last-child{border-right:none}
+.qs-v{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--accent)}
+.qs-k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;font-family:'JetBrains Mono',monospace}
+.pbody{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.pcol{padding:28px 32px}
+.pcol:first-child{border-right:1.5px solid var(--border)}
+.pct{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.pct::after{content:'';flex:1;height:1px;background:var(--border);margin-left:8px}
+.drow{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+.dk{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;min-width:96px;padding-top:1px;font-family:'JetBrains Mono',monospace}
+.dv{font-size:13px;color:var(--ink);font-weight:500;line-height:1.5}
+.gbar-wrap{margin-bottom:12px}
+.gbh{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.gbn{font-size:12.5px;font-weight:600}
+.gbp{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:600}
+.gbbg{height:6px;background:#e7e5e4;border-radius:99px}
+.gbf{height:6px;border-radius:99px;background:var(--accent)}
+.gdesc{font-size:11px;color:var(--muted);margin-top:3px}
+.psec{margin-bottom:16px}
+.psl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-family:'JetBrains Mono',monospace}
+.tc{display:flex;flex-wrap:wrap;gap:6px}
+.ptag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid}
+.brow{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.blabel{font-size:12px;font-weight:500;min-width:150px}
+.dots{display:flex;gap:4px}
+.dot{width:14px;height:14px;border-radius:50%}
+.df{background:var(--accent)}
+.de{background:#e7e5e4}
+.jsec{grid-column:1/-1;border-top:1.5px solid var(--border);padding:28px 32px}
+.jstrip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:16px}
+.jstep{text-align:center;padding:16px 10px;border-right:1px dashed var(--border);position:relative}
+.jstep:last-child{border-right:none}
+.jstep::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--border);font-size:16px;z-index:1}
+.jstep:last-child::after{display:none}
+.ji{font-size:28px;margin-bottom:8px}
+.jstage{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:4px}
+.jaction{font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.jthought{font-size:11px;color:var(--muted);line-height:1.5;font-style:italic}
+.jem{margin-top:10px;display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.eb{background:#fee2e2;color:#b91c1c}
+.eo{background:#fef3c7;color:#92400e}
+.eg{background:#dcfce7;color:#15803d}
+.eg2{background:#dbeafe;color:#1d4ed8}
+.pg-row{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--border)}
+.pgcol{padding:24px 32px}
+.pgcol:first-child{border-right:1.5px solid var(--border)}
+.pgi{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.5;margin-bottom:8px}
+.pgdot{width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;margin-top:1px}
+@media(max-width:700px){.r-grid,.pbody,.pg-row{grid-template-columns:1fr}.p-top{grid-template-columns:auto 1fr}.pquote{display:none}.jstrip{grid-template-columns:1fr}.jstep{border-right:none;border-bottom:1px dashed var(--border)}.jstep::after{content:'↓';right:50%;top:auto;bottom:-12px;transform:translateX(50%)}.pcol:first-child{border-right:none;border-bottom:1.5px solid var(--border)}.pgcol:first-child{border-right:none;border-bottom:1.5px solid var(--border)}header{flex-direction:column;gap:10px;padding:16px}.qs{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:center">
+    <div class="lt">L&T</div>
+    <div style="margin-left:14px">
+      <span class="ht">Critical Thinking, Design Thinking, Leadership &amp; Teamwork</span>
+      <span class="hs">ANALYTICAL THINKING DRIVEN BY DESIGN THINKING · TASK #02</span>
+    </div>
+  </div>
+  <div class="tbadge">Task #02</div>
+</header>
+
+<!-- SECTION 1: USER RESEARCH -->
+<div style="padding:48px 0 0">
+  <div class="wrap">
+    <div class="sec-label">Section 01 · User Research</div>
+    <div class="sec-title">Analytical <span>User Research</span></div>
+    <p style="color:var(--muted);font-size:13.5px;margin-top:8px;max-width:600px;line-height:1.7">
+      Research conducted for <strong>InvoiceAI</strong> — an AI-powered invoice maker app for Indian freelancers and small business owners. Methods: surveys, interviews, and competitive observation.
+    </p>
+    <div class="r-grid">
+      <div class="r-card">
+        <div class="r-title">🔍 Research Methods Used</div>
+        <table>
+          <thead><tr><th>Method</th><th>Sample</th><th>Type</th></tr></thead>
+          <tbody>
+            <tr><td>Online Survey (Google Forms)</td><td>120 respondents</td><td><span class="tag b">Quantitative</span></td></tr>
+            <tr><td>1-on-1 User Interviews</td><td>15 freelancers</td><td><span class="tag">Qualitative</span></td></tr>
+            <tr><td>Competitor App Observation</td><td>5 apps tested</td><td><span class="tag g">Behavioural</span></td></tr>
+            <tr><td>Social Media Listening</td><td>Reddit, Twitter</td><td><span class="tag">Qualitative</span></td></tr>
+            <tr><td>Prototype Usability Test</td><td>8 participants</td><td><span class="tag b">Quantitative</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="r-card">
+        <div class="r-title">📊 Key Research Findings</div>
+        <table>
+          <thead><tr><th>Finding</th><th>Data</th></tr></thead>
+          <tbody>
+            <tr><td>Weekly hours lost to manual invoicing</td><td><strong>3.2 hrs/week</strong></td></tr>
+            <tr><td>Experienced late/missed payment due to error</td><td><strong>68%</strong></td></tr>
+            <tr><td>Currently use Excel/Word for invoices</td><td><strong>74%</strong></td></tr>
+            <tr><td>Would pay for an automated solution</td><td><strong>81% yes</strong></td></tr>
+            <tr><td>Primary device for work: smartphone</td><td><strong>89%</strong></td></tr>
+            <tr><td>#1 pain point: manual GST calculation</td><td><strong>52% cited</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="r-card">
+        <div class="r-title">🎯 Target User Segments</div>
+        <table>
+          <thead><tr><th>Segment</th><th>India Size</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td>Freelance designers, developers, writers</td><td>~15M</td><td><span class="tag g">Primary</span></td></tr>
+            <tr><td>Small business owners (1–10 employees)</td><td>~63M</td><td><span class="tag g">Primary</span></td></tr>
+            <tr><td>Independent consultants &amp; coaches</td><td>~4M</td><td><span class="tag b">Secondary</span></td></tr>
+            <tr><td>CA / Tax professionals</td><td>~700K</td><td><span class="tag">Tertiary</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="r-card">
+        <div class="r-title">⚔️ Competitive Analysis</div>
+        <table>
+          <thead><tr><th>Competitor</th><th>Gap Identified</th></tr></thead>
+          <tbody>
+            <tr><td>Zoho Invoice</td><td>Complex UI; steep learning curve</td></tr>
+            <tr><td>Vyapar</td><td>Inventory-heavy; overkill for freelancers</td></tr>
+            <tr><td>Wave (US)</td><td>No GST / UPI localisation for India</td></tr>
+            <tr><td>Excel / Google Sheets</td><td>No automation, manual errors, slow</td></tr>
+            <tr><td>Freshbooks</td><td>Expensive; no meaningful free tier</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: PERSONA -->
+<div class="p-wrap">
+  <div class="wrap">
+    <div class="sec-label">Section 02 · Persona Creation</div>
+    <div class="sec-title">Primary User <span>Persona</span></div>
+    <p style="color:var(--muted);font-size:13.5px;margin-top:8px;margin-bottom:24px;max-width:600px;line-height:1.7">
+      Synthesised from interviews, survey data, and usability tests across 120+ participants.
+    </p>
+    <div class="p-card">
+      <!-- Top -->
+      <div class="p-top">
+        <div class="avatar">👨‍💻</div>
+        <div>
+          <div class="plabel">Primary Persona · InvoiceAI</div>
+          <div class="pname">Arjun Mehta</div>
+          <div class="prole">Freelance UI/UX Designer · Mumbai, Maharashtra</div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <span style="background:rgba(255,255,255,.1);color:#fef3c7;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600">📱 Mobile-first</span>
+            <span style="background:rgba(255,255,255,.1);color:#bfdbfe;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600">💰 Price-sensitive</span>
+            <span style="background:rgba(255,255,255,.1);color:#bbf7d0;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600">⚡ Efficiency-driven</span>
+          </div>
+        </div>
+        <div class="pquote">"I'm good at design. I'm terrible at paperwork. Every invoice I send late costs me a client relationship, not just money."</div>
+      </div>
+      <!-- Quick stats -->
+      <div class="qs">
+        <div class="qs-i"><div class="qs-v">26</div><div class="qs-k">Age</div></div>
+        <div class="qs-i"><div class="qs-v">Rs.55K</div><div class="qs-k">Monthly Income</div></div>
+        <div class="qs-i"><div class="qs-v">3.2 hrs</div><div class="qs-k">Lost to billing/wk</div></div>
+        <div class="qs-i"><div class="qs-v">8–12</div><div class="qs-k">Active Clients</div></div>
+        <div class="qs-i"><div class="qs-v">4★</div><div class="qs-k">Tech Comfort</div></div>
+        <div class="qs-i"><div class="qs-v">81%</div><div class="qs-k">Pays via UPI</div></div>
+      </div>
+      <!-- Body -->
+      <div class="pbody">
+        <!-- Left -->
+        <div class="pcol">
+          <div class="pct">📋 Demographic Information</div>
+          <div class="drow"><div class="dk">Full Name</div><div class="dv">Arjun Mehta</div></div>
+          <div class="drow"><div class="dk">Age</div><div class="dv">26 years old</div></div>
+          <div class="drow"><div class="dk">Gender</div><div class="dv">Male</div></div>
+          <div class="drow"><div class="dk">Location</div><div class="dv">Andheri West, Mumbai, Maharashtra</div></div>
+          <div class="drow"><div class="dk">Education</div><div class="dv">B.Des – NID Ahmedabad (2020)</div></div>
+          <div class="drow"><div class="dk">Occupation</div><div class="dv">Freelance UI/UX Designer (self-employed)</div></div>
+          <div class="drow"><div class="dk">Income</div><div class="dv">Rs.45,000 – Rs.70,000/month (variable)</div></div>
+          <div class="drow"><div class="dk">Family</div><div class="dv">Single, lives alone in a rented flat</div></div>
+          <div class="drow"><div class="dk">Devices</div><div class="dv">iPhone 14, MacBook Pro, iPad</div></div>
+          <div class="drow"><div class="dk">Tech Level</div><div class="dv">High — uses Figma, Notion, Slack daily</div></div>
+
+          <div style="margin-top:24px">
+            <div class="pct">🎯 Goals &amp; Objectives</div>
+            <div class="gbar-wrap">
+              <div class="gbh"><span class="gbn">Send invoices within 2 minutes of project completion</span><span class="gbp">90%</span></div>
+              <div class="gbbg"><div class="gbf" style="width:90%"></div></div>
+              <div class="gdesc">Currently takes 45–90 min per invoice manually</div>
+            </div>
+            <div class="gbar-wrap">
+              <div class="gbh"><span class="gbn">Get paid within 3 days of invoicing</span><span class="gbp">80%</span></div>
+              <div class="gbbg"><div class="gbf" style="width:80%;background:#0369a1"></div></div>
+              <div class="gdesc">Late payments hurt his monthly cash flow</div>
+            </div>
+            <div class="gbar-wrap">
+              <div class="gbh"><span class="gbn">Maintain professional brand with every client</span><span class="gbp">75%</span></div>
+              <div class="gbbg"><div class="gbf" style="width:75%;background:#15803d"></div></div>
+              <div class="gdesc">Wants invoices to look premium, not generic Excel</div>
+            </div>
+            <div class="gbar-wrap">
+              <div class="gbh"><span class="gbn">Zero GST calculation errors</span><span class="gbp">95%</span></div>
+              <div class="gbbg"><div class="gbf" style="width:95%;background:#7c3aed"></div></div>
+              <div class="gdesc">Incorrect GST caused a client dispute last year</div>
+            </div>
+            <div class="gbar-wrap">
+              <div class="gbh"><span class="gbn">Track all outstanding payments in one dashboard</span><span class="gbp">70%</span></div>
+              <div class="gbbg"><div class="gbf" style="width:70%;background:#b45309"></div></div>
+              <div class="gdesc">Currently uses sticky notes — highly unreliable</div>
+            </div>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="pcol">
+          <div class="pct">🧠 Psychographic Information</div>
+          <div class="psec">
+            <div class="psl">Interests &amp; Hobbies</div>
+            <div class="tc">
+              <span class="ptag" style="background:#fff7ed;color:#c2410c;border-color:#fed7aa">UI/UX Design</span>
+              <span class="ptag" style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Behance browsing</span>
+              <span class="ptag" style="background:#f0fdf4;color:#15803d;border-color:#bbf7d0">Hiking &amp; travel</span>
+              <span class="ptag" style="background:#faf5ff;color:#7c3aed;border-color:#e9d5ff">Tech podcasts</span>
+              <span class="ptag" style="background:#fff7ed;color:#c2410c;border-color:#fed7aa">Indie music</span>
+              <span class="ptag" style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Coffee shop work</span>
+            </div>
+          </div>
+          <div class="psec">
+            <div class="psl">Personality Traits</div>
+            <div class="tc">
+              <span class="ptag" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1">✦ Detail-oriented</span>
+              <span class="ptag" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1">✦ Admin procrastinator</span>
+              <span class="ptag" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1">✦ Creative-first thinker</span>
+              <span class="ptag" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1">✦ Values autonomy</span>
+              <span class="ptag" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1">✦ Mildly anxious about money</span>
+            </div>
+          </div>
+          <div class="psec">
+            <div class="psl">Choices &amp; Preferences</div>
+            <div class="tc">
+              <span class="ptag" style="background:#fef9c3;color:#854d0e;border-color:#fde68a">Free tier first</span>
+              <span class="ptag" style="background:#fef9c3;color:#854d0e;border-color:#fde68a">UPI over cards</span>
+              <span class="ptag" style="background:#fef9c3;color:#854d0e;border-color:#fde68a">Minimal UI</span>
+              <span class="ptag" style="background:#fef9c3;color:#854d0e;border-color:#fde68a">No long onboarding</span>
+              <span class="ptag" style="background:#fef9c3;color:#854d0e;border-color:#fde68a">Dark mode always</span>
+            </div>
+          </div>
+          <div style="margin-top:24px">
+            <div class="pct">📱 Behaviours &amp; Preferences</div>
+            <div class="brow"><div class="blabel">App usage (daily)</div><div class="dots"><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div></div><div style="font-size:11px;color:var(--muted);margin-left:4px">Very High</div></div>
+            <div class="brow"><div class="blabel">Willingness to pay Rs.299/mo</div><div class="dots"><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot de"></div></div><div style="font-size:11px;color:var(--muted);margin-left:4px">High</div></div>
+            <div class="brow"><div class="blabel">Invoicing discipline</div><div class="dots"><div class="dot df"></div><div class="dot df"></div><div class="dot de"></div><div class="dot de"></div><div class="dot de"></div></div><div style="font-size:11px;color:var(--muted);margin-left:4px">Low (core pain)</div></div>
+            <div class="brow"><div class="blabel">Tech adoption speed</div><div class="dots"><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot de"></div></div><div style="font-size:11px;color:var(--muted);margin-left:4px">Early Adopter</div></div>
+            <div class="brow"><div class="blabel">Referral / word of mouth</div><div class="dots"><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot de"></div><div class="dot de"></div></div><div style="font-size:11px;color:var(--muted);margin-left:4px">Medium</div></div>
+            <div class="brow"><div class="blabel">Brand loyalty (if product works)</div><div class="dots"><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div><div class="dot df"></div></div><div style="font-size:11px;color:var(--muted);margin-left:4px">Extremely High</div></div>
+          </div>
+        </div>
+        <!-- User Journey full width -->
+        <div class="jsec">
+          <div class="pct" style="margin-bottom:4px">🗺️ User Journey Map</div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Arjun's end-to-end experience — from frustration to loyal advocacy across 5 key stages</p>
+          <div class="jstrip">
+            <div class="jstep"><div class="ji">😤</div><div class="jstage">Stage 1 · Trigger</div><div class="jaction">Feels the pain</div><div class="jthought">"Another Sunday wasted on Excel invoices. There has to be a better way."</div><div class="jem eb">Frustrated</div></div>
+            <div class="jstep"><div class="ji">🔍</div><div class="jstage">Stage 2 · Discovery</div><div class="jaction">Finds InvoiceAI</div><div class="jthought">Colleague shares it on WhatsApp. Checks 4.8★ rating on Play Store. Downloads free tier.</div><div class="jem eo">Curious</div></div>
+            <div class="jstep"><div class="ji">⚡</div><div class="jstage">Stage 3 · First Use</div><div class="jaction">Invoice in 28 sec</div><div class="jthought">"Wait — it auto-filled my GST number? And it looks THIS good?"</div><div class="jem eg">Surprised</div></div>
+            <div class="jstep"><div class="ji">💰</div><div class="jstage">Stage 4 · Value</div><div class="jaction">Gets paid faster</div><div class="jthought">Client pays via UPI directly from invoice link. Same day. First time ever.</div><div class="jem eg2">Delighted</div></div>
+            <div class="jstep"><div class="ji">📣</div><div class="jstage">Stage 5 · Advocacy</div><div class="jaction">Refers 6 friends</div><div class="jthought">Posts dashboard screenshot in freelancer WhatsApp group. 6 downloads in 24 hours.</div><div class="jem eg2">Champion</div></div>
+          </div>
+        </div>
+        <!-- Pain vs Gain -->
+        <div class="pg-row">
+          <div class="pgcol">
+            <div class="pct" style="color:#b91c1c">😣 Pain Points</div>
+            <div class="pgi"><div class="pgdot" style="background:#fee2e2;color:#b91c1c">✗</div>3+ hours/week lost to manual Excel invoicing</div>
+            <div class="pgi"><div class="pgdot" style="background:#fee2e2;color:#b91c1c">✗</div>Frequent GST calculation errors causing client disputes</div>
+            <div class="pgi"><div class="pgdot" style="background:#fee2e2;color:#b91c1c">✗</div>No visibility into which invoices are overdue</div>
+            <div class="pgi"><div class="pgdot" style="background:#fee2e2;color:#b91c1c">✗</div>Generic Excel look damages professional credibility</div>
+            <div class="pgi"><div class="pgdot" style="background:#fee2e2;color:#b91c1c">✗</div>Payment follow-up is awkward and time-consuming</div>
+          </div>
+          <div class="pgcol">
+            <div class="pct" style="color:#15803d">🎉 Desired Gains</div>
+            <div class="pgi"><div class="pgdot" style="background:#dcfce7;color:#15803d">✓</div>Invoice creation in under 60 seconds</div>
+            <div class="pgi"><div class="pgdot" style="background:#dcfce7;color:#15803d">✓</div>Auto-calculated GST, TDS, and payment terms</div>
+            <div class="pgi"><div class="pgdot" style="background:#dcfce7;color:#15803d">✓</div>Dashboard showing all pending vs paid invoices</div>
+            <div class="pgi"><div class="pgdot" style="background:#dcfce7;color:#15803d">✓</div>Branded, professional PDF that builds client trust</div>
+            <div class="pgi"><div class="pgdot" style="background:#dcfce7;color:#15803d">✓</div>Automated payment reminders via WhatsApp/email</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:14px 20px;background:#f1f5f9;border:1.5px dashed #cbd5e1;border-radius:10px;font-size:12.5px;color:var(--muted)">
+      <strong style="color:var(--ink)">Secondary Persona (noted):</strong> Priya, 34 — Owner of a 4-person interior design studio in Bangalore. Higher revenue, needs team collaboration and multi-client tracking. Represents the Business plan upsell segment.
+    </div>
+  </div>
+</div>
+</body>
+</html>
